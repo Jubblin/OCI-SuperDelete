@@ -1,4 +1,3 @@
-# Use Python 3.11 as base image with multi-arch support
 FROM python:3.11-slim
 
 # Set working directory
@@ -30,4 +29,9 @@ VOLUME ["/home/oci/.oci"]
 USER oci
 
 # Set the entrypoint
-ENTRYPOINT ["python", "delete.py"] 
+ENTRYPOINT ["python", "delete.py"]
+
+# Add healthcheck
+# hadolint ignore=DL3037
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD ["/usr/local/bin/healthcheck.sh"] 

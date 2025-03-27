@@ -160,7 +160,7 @@ The output should look like this:
 
 ```text
 +----------------------------------------------------------------------------------------------------------------------+-----------------+
-| CompartmentID                                                                                    		                 | Cost          |
+| CompartmentID                                                                                                     | Cost          |
 +----------------------------------------------------------------------------------------------------------------------+-----------------+
 | python3 delete.py -c ocid1.compartment.oc1..a...ta -rg us-ashburn-1 -cp tenancy -skip_delete_compartment -force &  | 33.504388600351 |
 | python3 delete.py -c ocid1.compartment.oc1..a...ta -rg us-ashburn-1 -cp tenancy -skip_delete_compartment -force &  | 33.504389859927 |
@@ -260,10 +260,10 @@ docker run -v ~/.oci:/home/oci/.oci oci-superdelete:<tag> -c ocid1.compartment.o
 
 ## Contributors (Thank you!!!)
 
-- Allen Kubai Wangu (https://github.com/allenkubai)
+- Allen Kubai Wangu [https://github.com/allenkubai](https://github.com/allenkubai)
 
-- Alexey Dolganov (https://github.com/aorcl)
+- Alexey Dolganov [https://github.com/aorcl](https://github.com/aorcl)
 
-- T-Srikanth (https://github.com/T-Srikanth)
+- T-Srikanth [https://github.com/T-Srikanth](https://github.com/T-Srikanth)
 
-- Adi Zohar (https://github.com/adizohar)
+- Adi Zohar [https://github.com/adizohar](https://github.com/adizohar)
