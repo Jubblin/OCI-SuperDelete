@@ -59,6 +59,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
       id-token: write
 
     # Setup local oci registry
@@ -153,3 +155,9 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
   
+      - name: deploy oras 
+        uses: oras-project/setup-oras@v1
+        with:
+          url: https://github.com/oras-project/oras/releases/download/v1.2.0-beta.1/oras_1.2.0-beta.1_linux_amd64.tar.gz
+          checksum: 37d86f848f7c7c471035cf8218f06372fd72a9fbdca1e10f509738e222b3b2be
+      - run: oras version§
