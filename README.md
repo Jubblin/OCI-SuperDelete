@@ -6,6 +6,17 @@ Initial development by Richard Garsthagen - <www.oc-blog.com>
 
 ## Running the script
 
+### Installation Steps
+
+```
+git clone https://github.com/AnykeyNL/OCI-SuperDelete.git
+cd OCI-SuperDelete
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip wheel setuptools
+python3 -m pip install -r requirements.txt
+```
+
 ### Running Directly with Python
 
 To run the script directly with Python:
@@ -29,7 +40,7 @@ optional arguments:
 python3 delete.py -c <CompartmentID>
 ```
 
-### Using GitHub Container Registry (Recommended)
+### Using GitHub Container Registry
 
 The script is available as a pre-built container from GitHub Container Registry with support for both amd64 and arm64 architectures:
 
