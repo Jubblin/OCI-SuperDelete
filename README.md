@@ -4,8 +4,6 @@ Delete all OCI resources in a compartment.
 
 Initial development by Richard Garsthagen - <www.oc-blog.com>
 
-[[TOC]]
-
 ## Running the script
 
 ### Running Directly with Python
@@ -36,18 +34,40 @@ python3 delete.py -c <CompartmentID>
 The script is available as a pre-built container from GitHub Container Registry with support for both amd64 and arm64 architectures:
 
 ```bash
-docker run -v ~/.oci:/root/.oci ghcr.io/Jubblin/oci-superdelete:latest -c <CompartmentID>
+docker run -v ~/.oci:/home/oci/.oci ghcr.io/anykeynl/oci-superdelete:<tag> -h 
+Unable to find image 'ghcr.io/anykeynl/oci-superdelete:<tag>' locally
+master: Pulling from anykeynl/oci-superdelete
+5335ca4be2d4: Pull complete 
+230bbd029294: Pull complete 
+40be0534ae21: Pull complete 
+d75d4c974ea2: Pull complete 
+ef27ba080d6a: Pull complete 
+6e909acdb790: Pull complete 
+f6735c715b7b: Pull complete 
+245f048c9f8a: Pull complete 
+b4a6013a75d1: Pull complete 
+9eab895eb84c: Pull complete 
+Digest: sha256:68b1e43c1687357ac2d7f79fe355e692c8f30b244c66be3f98581bceade966f3
+Status: Downloaded newer image for ghcr.io/anykeynl/oci-superdelete:master
+usage: delete.py [-h] [-cp CONFIG_PROFILE] [-ip] [-dt] [-log LOG_FILE] [-force] [-debug] [-skip_delete_compartment] [-rg REGIONS]
+                 [-c COMPARTMENT]
+
+options:
+  -h, --help                show this help message and exit
+  -cp CONFIG_PROFILE        Config Profile inside the config file
+  -ip                       Use Instance Principals for Authentication
+  -dt                       Use Delegation Token for Authentication
+  -log LOG_FILE             output log file
+  -force                    force delete without confirmation
+  -debug                    Enable debug
+  -skip_delete_compartment  Skip Deleting the compartment at the end
+  -rg REGIONS               Regions to delete comma separated
+  -c COMPARTMENT            top level compartment id to delete
 ```
 
 ### Building from Source
 
 If you prefer to build from source, you can use the following commands:
-
-#### Single Architecture Build
-
-```bash
-docker build -t oci-superdelete .
-```
 
 #### Multi-architecture Build (Recommended)
 
@@ -59,27 +79,12 @@ The container supports both amd64 and arm64 architectures. To build for multiple
 docker buildx create --name mybuilder --use
 ```
 
-1. Build and push for multiple architectures:
+1. Build for multiple architectures:
 
 ```bash
 docker buildx build --platform linux/amd64,linux/arm64 \
-  -t ghcr.io/richardw/oci-superdelete:latest \
-  --push .
+  -t ghcr.io/AnykeyNL/oci-superdelete:latest .
 ```
-
-1. Run the container (Docker will automatically select the correct architecture):
-
-```bash
-docker run -v ~/.oci:/root/.oci ghcr.io/Jubblin/oci-superdelete:latest -c <CompartmentID>
-```
-
-Note: You need to be logged in to GitHub Container Registry to push:
-
-```bash
-echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
-```
-
-  
 
 ## WORK_IN_PROGRESS
 
@@ -198,7 +203,7 @@ And you can lower the MaxIDeleteIteration value inside AnyDelete.py to control h
 ### Building the Container
 
 ```bash
-docker build -t oci-superdelete .
+docker build -t oci-superdelete:<tag> .
 ```
 
 ### Running the Container
@@ -206,7 +211,7 @@ docker build -t oci-superdelete .
 The container needs access to your OCI configuration file. Mount your local OCI config directory when running the container:
 
 ```bash
-docker run -v ~/.oci:/root/.oci oci-superdelete -c <CompartmentID>
+docker run -v ~/.oci:/home/oci/.oci oci-superdelete:<tag> -c <CompartmentID>
 ```
 
 ### Example Commands
@@ -214,32 +219,32 @@ docker run -v ~/.oci:/root/.oci oci-superdelete -c <CompartmentID>
 1. Delete resources in a specific compartment:
 
 ```bash
-docker run -v ~/.oci:/root/.oci oci-superdelete -c ocid1.compartment.oc1..xxxxx
+docker run -v ~/.oci:/home/oci/.oci oci-superdelete:<tag> -c ocid1.compartment.oc1..xxxxx
 ```
 
 1. Force delete without confirmation:
 
 ```bash
-docker run -v ~/.oci:/root/.oci oci-superdelete -c ocid1.compartment.oc1..xxxxx -force
+docker run -v ~/.oci:/home/oci/.oci oci-superdelete:<tag> -c ocid1.compartment.oc1..xxxxx -force
 ```
 
 1. Delete resources in specific regions:
 
 ```bash
-docker run -v ~/.oci:/root/.oci oci-superdelete -c ocid1.compartment.oc1..xxxxx -rg us-ashburn-1,us-phoenix-1
+docker run -v ~/.oci:/home/oci/.oci oci-superdelete:<tag> -c ocid1.compartment.oc1..xxxxx -rg us-ashburn-1,us-phoenix-1
 ```
 
 1. Use a specific config profile:
 
 ```bash
-docker run -v ~/.oci:/root/.oci oci-superdelete -c ocid1.compartment.oc1..xxxxx -cp myprofile
+docker run -v ~/.oci:/home/oci/.oci oci-superdelete:<tag> -c ocid1.compartment.oc1..xxxxx -cp myprofile
 ```
 
 ### Notes
 
 - The container uses Python 3.11
 - Your OCI configuration file must be properly set up with the necessary credentials
-- The container mounts your local OCI config directory to `/root/.oci` inside the container
+- The container mounts your local OCI config directory to `/home/oci/.oci` inside the container
 - All command-line arguments supported by the script can be used with the Docker container
 
 ## Contributors (Thank you!!!)
